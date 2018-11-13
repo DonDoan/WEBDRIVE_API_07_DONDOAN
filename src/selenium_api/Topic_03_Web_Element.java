@@ -1,20 +1,15 @@
 package selenium_api;
 
-import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
-import org.bouncycastle.asn1.x509.IssuingDistributionPoint;
 import org.openqa.selenium.By;
-import org.openqa.selenium.By.ByXPath;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.remote.server.handler.FindElement;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import org.testng.reporters.jq.NavigatorPanel;
 
 public class Topic_03_Web_Element {
 //========== Local Variables for this class ===========
