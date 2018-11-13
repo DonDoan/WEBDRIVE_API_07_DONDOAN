@@ -148,7 +148,7 @@ public class Topic_03_Web_Element {
 //====================================================================================================	
 // Sub Functions	
 	public void open_page(String a) {
-		driver.get("https://daominhdam.github.io/basic-form/index.html");
+//		driver.get("https://daominhdam.github.io/basic-form/index.html");
 		driver.get(a);
 		driver.manage().window().maximize();
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
