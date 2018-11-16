@@ -208,7 +208,7 @@ public class Topic_02_Xpath_Locators {
 	}
 	public int random_num_4email() {
 		Random random = new Random();
-		int random_num = random.nextInt(999);
+		int random_num = random.nextInt(30)+1;
 		System.out.println("Random number is " + random_num);
 		return random_num;
 	}
