@@ -18,15 +18,8 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 public class Topic_04_DropdownList {
-
-//	String HomePageUrl = "http://demo.guru99.com/v4";
-//========== Catche of elenments by Xpath/Locators ===========
-
-//=============================================================
-
 //===================================
 	WebDriver driver;
-	String CustomerID;
 	WebDriverWait waitExplicit;
 	JavascriptExecutor javaExecutor;
 
@@ -44,6 +37,7 @@ public class Topic_04_DropdownList {
 //		driver = new FirefoxDriver();
 
 // TESTCASES=============================================================
+//	@Test
 	public void TC_01_HTMLDropDownList() throws Exception {
 //			Step 01 - Truy cập vào trang: https://daominhdam.github.io/basic-form/index.html
 		String url1 = "https://daominhdam.github.io/basic-form/index.html";
@@ -74,73 +68,67 @@ public class Topic_04_DropdownList {
 		Assert.assertEquals(select1.getOptions().size(), 5);
 	}
 
-//	@Test
+	@Test
 	public void TC_02_HandleCustomDropDownList() throws Exception {
 		// Jquery
-		driver.get("http://jqueryui.com/resources/demos/selectmenu/default.html");
-
-		selectItemInCustomDropDown("//span[@id='number-button']",
-				"//ul[@id = 'number-menu']/li[@class='ui-menu-item']/div", "19");
+//		Step 01 - Truy cập vào trang: http://jqueryui.com/resources/demos/selectmenu/default.html
+		String Jquery_url ="http://jqueryui.com/resources/demos/selectmenu/default.html";
+		open_page(Jquery_url);
+//		Step 02 - Chọn item cuối cùng: số 19		
+		selectItemInCustomDropDown("//div[@class='demo']","//div[@id='cap-view']/span[@aria-owns='color_listbox']",
+				"//li[@class='ui-menu-item']/div", "19");
+//		selectItemInCustomDropDown1("//span[@id='number-button']",
+//				"//li[@class='ui-menu-item']/div", "19");
+//		Step 03 - Kiểm tra item đã được chọn thành công
 		Assert.assertTrue(driver
 				.findElement(
 						By.xpath("//span[@id ='number-button']/span[@class= 'ui-selectmenu-text' and text() ='19'] "))
 				.isDisplayed());
 		Thread.sleep(2000);
 
-		selectItemInCustomDropDown("//span[@id='number-button']",
-				"//ul[@id = 'number-menu']/li[@class='ui-menu-item']/div", "15");
-		Assert.assertTrue(driver
-				.findElement(
-						By.xpath("//span[@id ='number-button']/span[@class= 'ui-selectmenu-text' and text() ='15'] "))
-				.isDisplayed());
-		Thread.sleep(2000);
-
-		selectItemInCustomDropDown("//span[@id='number-button']",
-				"//ul[@id = 'number-menu']/li[@class='ui-menu-item']/div", "4");
-		Assert.assertTrue(driver
-				.findElement(
-						By.xpath("//span[@id ='number-button']/span[@class= 'ui-selectmenu-text' and text() ='4'] "))
-				.isDisplayed());
-		Thread.sleep(2000);
 
 		// Kendo-ui
-		driver.get("https://demos.telerik.com/kendo-ui/dropdownlist/index");
-
-		selectItemInCustomDropDown("//span[@aria-owns= 'color_listbox']", "//ul[@id ='color_listbox']/li", "Orange");
+		String Kendo_url ="https://demos.telerik.com/kendo-ui/dropdownlist/index";
+		open_page(Kendo_url);
+		selectItemInCustomDropDown("//div[@id='cap-view']","//span[@aria-owns='color_listbox']//span[@class='k-input']",
+				"//ul[@id='color_listbox']/li", "Grey");
 		Assert.assertTrue(driver
 				.findElement(
-						By.xpath("//span[@aria-owns= 'color_listbox']//span[@class = 'k-input' and text() = 'Orange']"))
+						By.xpath("//span[@aria-owns='color_listbox']//span[@class='k-input' and text()='Grey'] "))
 				.isDisplayed());
 		Thread.sleep(2000);
-
-		selectItemInCustomDropDown("//span[@aria-owns= 'color_listbox']", "//ul[@id ='color_listbox']/li", "Grey");
+		
+		
+		// Angular
+		String Angular_url ="https://material.angular.io/components/select/overview";
+		open_page(Angular_url);
+		selectItemInCustomDropDown("//div[@material-docs-example='select-reset']//div[@class='docs-example-viewer-body']",
+				"//div[@material-docs-example='select-reset']//div[@class='mat-select-value']",
+				"//span[@class='mat-option-text']", "Arizona");
 		Assert.assertTrue(driver
 				.findElement(
-						By.xpath("//span[@aria-owns= 'color_listbox']//span[@class = 'k-input' and text() = 'Grey']"))
-				.isDisplayed());
-		Thread.sleep(2000);
-
-		selectItemInCustomDropDown("//span[@aria-owns= 'color_listbox']", "//ul[@id ='color_listbox']/li", "Black");
-		Assert.assertTrue(driver
-				.findElement(
-						By.xpath("//span[@aria-owns= 'color_listbox']//span[@class = 'k-input' and text() = 'Black']"))
+						By.xpath("//mat-select[@placeholder='State']//span//span[text()='Arizona']"))
 				.isDisplayed());
 		Thread.sleep(2000);
 
 	}
 
-	public void selectItemInCustomDropDown(String parentXpath, String childXpath, String expectedItem) {
+	public void selectItemInCustomDropDown(String ScrollToXpath, String parentXpath, String childXpath, String expectedItem) throws Exception {
+		// Scroll to view element dropdown
+		javaExecutor.executeScript("arguments[0].scrollIntoView(true);", driver.findElement(By.xpath(ScrollToXpath)));
 		// Click vào dropdown
 		WebElement element = driver.findElement(By.xpath(parentXpath));
-		javaExecutor.executeScript("arguments[0].scrollIntoView(true);", element);
 		element.click();
+		Thread.sleep(1000);
 		// Get tất cả item trong dropdown vào 1 list element (List <WebElement>)
 		List<WebElement> childList = driver.findElements(By.xpath(childXpath));
+		// Print out
+		System.out.println(childList);
 		// Wait để tất cả phần tử trong dropdown được hiển thị
 		waitExplicit.until(ExpectedConditions.visibilityOfAllElements(childList));
 		// Dùng vòng lặp for duyệt qua từng phần tử sau đó getText
 		for (WebElement child : childList) {
-			String textItem = child.getText();
+			String textItem = child.getText().trim();
 			System.out.println("Text in drop dow =" + textItem);
 			// Nếu actual text = expected text thì click vào phần tử đó và break khỏi vòng
 			// lặp
@@ -151,7 +139,29 @@ public class Topic_04_DropdownList {
 			}
 		}
 	}
-
+	
+//	 public void selectItemInCustomDropDown1(String parenXpath, String childXpath, String expectedItem) {
+//		  // click vào dropdown
+//		  WebElement element = driver.findElement(By.xpath(parenXpath));
+//		  element.click();
+//		  
+//		  //Danh sách phần tử
+//		  List <WebElement> childList = driver.findElements(By.xpath(childXpath));
+//		  
+//		  //Đợi hiển thị tất cả các phần tử
+//		  waitExplicit.until(ExpectedConditions.visibilityOfAllElements(childList));
+//		  
+//		  for(WebElement child: childList) {
+//			  
+//			  String textItem = child.getText();
+//			  System.out.println("Text in Dropdown = " +textItem);
+//			  
+//			  if(textItem.equals(expectedItem)) {
+//				  child.click();
+//				  break;
+//			  }
+//		  }	
+//	 }
 //
 // ====================================================================================================
 // QUIT TESTING  =================================================================
