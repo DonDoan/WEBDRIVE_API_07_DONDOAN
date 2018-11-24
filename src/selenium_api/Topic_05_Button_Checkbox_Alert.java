@@ -149,7 +149,7 @@ public class Topic_05_Button_Checkbox_Alert {
 //			Test Script 06:
 //			Step 01 - Truy cập vào trang: https://daominhdam.github.io/basic-form/index.html
 		Common Common1 = new Common();
-//		Common1.open_page(url3);
+		Common1.open_page(url3);
 		Common1.A1();
 //		open_page(url3);
 //		By PromptByButton = By.xpath("//button[contains(text(),'Prompt')]");
@@ -169,7 +169,7 @@ public class Topic_05_Button_Checkbox_Alert {
 //		Assert.assertEquals(driver.findElement(message1).getText(), "You entered: Don");
 	}
 
-	@Test
+//	@Test
 	public void TC07() throws Exception {
 //			Test Script 07:
 //		String url4 = "http://the-internet.herokuapp.com/basic_auth";

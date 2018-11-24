@@ -5,6 +5,8 @@ public class Common_called {
 	// ====================================================================================================
 	public void A2() {
 		common1.A1();
+		String url = "url path";
+		common1.open_page(url);
 	}
 	// End Sub Functions
 }
