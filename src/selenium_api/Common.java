@@ -22,6 +22,10 @@ public class Common {
 		JavascriptExecutor je = (JavascriptExecutor) driver;
 		je.executeScript("arguments[0].click();", element);
 	}
+	//Click Element by javaScript
+	public void A1() {
+		System.out.print("DON");
+	}
 	//Open URL
 	public void open_page(String a) {
 		driver.get(a);
