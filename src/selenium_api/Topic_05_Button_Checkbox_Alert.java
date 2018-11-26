@@ -148,9 +148,9 @@ public class Topic_05_Button_Checkbox_Alert {
 	public void TC06() throws Exception {
 //			Test Script 06:
 //			Step 01 - Truy cập vào trang: https://daominhdam.github.io/basic-form/index.html
-		Common Common1 = new Common();
-		Common1.open_page(url3);
-		Common1.A1();
+//		Common Common1 = new Common();
+//		Common1.open_page(url3);
+//		Common1.A1();
 //		open_page(url3);
 //		By PromptByButton = By.xpath("//button[contains(text(),'Prompt')]");
 ////			Step 02 - Click vào button: Click for JS Prompt

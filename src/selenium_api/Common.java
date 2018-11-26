@@ -18,7 +18,7 @@ public class Common {
 	WebDriverWait waitExplicit;
 	// Sub Functions
 	//Click Element by javaScript
-	public void clickElementByJavascript(WebElement element) {
+	public void clickElementByJavascript(JavascriptExecutor javaExecutor, WebElement element) {
 		JavascriptExecutor je = (JavascriptExecutor) driver;
 		je.executeScript("arguments[0].click();", element);
 	}
@@ -27,14 +27,14 @@ public class Common {
 		System.out.print("DON");
 	}
 	//Open URL
-	public void open_page(String a) {
+	public void open_page(WebDriver driver, String a) {
 		driver.get(a);
 		driver.manage().window().maximize();
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 	}
 
 	// Control Displayed for elements
-	public boolean isControlDisplayed(By by) {
+	public boolean isControlDisplayed(WebDriver driver, By by) {
 		WebElement elements = driver.findElement(by);
 		if (elements.isDisplayed()) {
 			System.out.println("element " + by + " is displayed");
@@ -46,7 +46,7 @@ public class Common {
 	}
 
 	// Control Enabled for elements
-	public boolean isControlEnabled(By by) {
+	public boolean isControlEnabled(WebDriver driver, By by) {
 		WebElement elements = driver.findElement(by);
 		if (elements.isEnabled()) {
 			System.out.println("element " + by + " is enabled");
@@ -58,7 +58,7 @@ public class Common {
 	}
 
 	// Control Selected for elements
-	public boolean isControlSelected(By by) {
+	public boolean isControlSelected(WebDriver driver, By by) {
 		WebElement elements = driver.findElement(by);
 		if (elements.isSelected()) {
 			System.out.println("element " + by + " is selected");
@@ -92,7 +92,7 @@ public class Common {
 //		 
 //		    System.out.println(generatedString);
 //		}	
-	public void selectItemInCustomDropDown(String ScrollToXpath, String parentXpath, String childXpath, String expectedItem) throws Exception {
+	public void selectItemInCustomDropDown(JavascriptExecutor javaExecutor, WebDriverWait waitExplicit, WebDriver driver, String ScrollToXpath, String parentXpath, String childXpath, String expectedItem) throws Exception {
 		// Scroll to view element dropdown
 		javaExecutor.executeScript("arguments[0].scrollIntoView(true);", driver.findElement(By.xpath(ScrollToXpath)));
 		// Click vào dropdown
@@ -119,7 +119,7 @@ public class Common {
 		}
 	}
 	
-	 public void selectItemInCustomDropDown1(String parenXpath, String childXpath, String expectedItem) {
+	 public void selectItemInCustomDropDown1(WebDriverWait waitExplicit, WebDriver driver, String parenXpath, String childXpath, String expectedItem) {
 		  // click vào dropdown
 		  WebElement element = driver.findElement(By.xpath(parenXpath));
 		  element.click();

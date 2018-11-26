@@ -7,7 +7,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 public class Common_called {
-
+	Common_Test common1 = new Common_Test();
 	WebDriver driver;
 	// ====================================================================================================
 	@BeforeClass
@@ -19,7 +19,7 @@ public class Common_called {
 	}
 	@Test
 	public void A2() {
-		Common_Test common1 = new Common_Test();
+
 		common1.A1();
 		String url = "https://google.com/";
 		common1.open_page(driver,url);

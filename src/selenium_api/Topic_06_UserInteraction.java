@@ -20,6 +20,7 @@ import org.testng.annotations.Test;
 public class Topic_06_UserInteraction {
 
 	WebDriver driver;
+	Common common = new Common();
 
 	@BeforeClass
 	public void beforeClass() {
@@ -37,7 +38,7 @@ public class Topic_06_UserInteraction {
 	public void TC01_MouseHover() {
 //		Test Script 01: Move mouse to element
 //		Step 01 - Truy cập vào trang: http://www.myntra.com/
-		open_page("http://www.myntra.com/");
+		common.open_page(driver, "http://www.myntra.com/");
 //		Step 02 - Hover chuột vào Menu để login
 		By IconMenuBy = By.xpath("//div[@class='desktop-userIconsContainer']");
 		WebElement IconMenu = driver.findElement(IconMenuBy);
@@ -51,19 +52,25 @@ public class Topic_06_UserInteraction {
 		By LoginTitleBy = By.xpath("//p[text()='Login to Myntra']");
 		WebElement LoginTitle = driver.findElement(LoginTitleBy);
 		Assert.assertTrue(LoginTitle.isDisplayed());
-	}		
+	}	
+	@Test
+	public void TC02_ClickAndHold() {	
 //		Test Script 02: Click and hold element - select multiple item
 //		Step 01 - Truy cập vào trang: http://jqueryui.com/resources/demos/selectable/display-grid.html
 //		Step 02 - Click and hold từ 1-> 4
 //		Step 03 - Sau khi chọn kiểm tra rằng có đúng 4 phần tử đã được chọn thành công với xpath:
 //		//li[@class='ui-state-default ui-selectee ui-selected']
-//
+	}
+//	@Test
+	public void TC03_DoubleClick() {	
 //		Test Script 03: Double click
 //		Step 01 - Truy cập vào trang: http://www.seleniumlearn.com/double-click
 //		Step 02 - Double click vào element: Double-Click Me!
 //		Step 03 - Verify text trong alert được hiển thị: 'The Button was double-clicked.'
 //		Step 04 - Accept Javascript alert
-//
+	}
+//	@Test
+	public void TC04_RightClick() {
 //		Test Script 04: Right click to element
 //		Step 01 - Truy cập vào trang: http://swisnl.github.io/jQuery-contextMenu/demo.html
 //		Step 02 - Right click vào element: right click me
@@ -73,19 +80,20 @@ public class Topic_06_UserInteraction {
 //
 //		Step 05 - Click chọn Quit
 //		Step 06 - Accept Javascript alert
-//
+	}
+//	@Test
+	public void TC05_DragAndDrop() {
 //		Test Script 05: Drag and drop element
 //		Step 01 - Truy cập vào trang: http://demos.telerik.com/kendo-ui/dragdrop/angular
 //		Step 02 - Kéo hình tròn nhỏ vào hình tròn lớn
 //		Step 03 - Verify message đã thay đổi: You did great!
-//
+	}
+//	@Test
+//	@Test
+	public void TC_06_Drag_Drop_HTML5_Xpath() throws AWTException, Exception {
 //		Test Script 06: Drag and drop HTML5
 //		Step 01 - Truy cập vào trang: https://html5demos.com/drag/#
-//		Step 02 - Sử dụng Javascript/ Jquery để kéo thả element: one/ two/ three/.. vào thùng rác		
-
-
-//	@Test
-	public void TC_07_Drag_Drop_HTML5_Xpath() throws AWTException, Exception {
+//		Step 02 - Sử dụng Javascript/ Jquery để kéo thả element: one/ two/ three/.. vào thùng rác
 		driver.get("https://html5demos.com/drag/");
 
 		String oneXpath = "//a[@id='one']";
