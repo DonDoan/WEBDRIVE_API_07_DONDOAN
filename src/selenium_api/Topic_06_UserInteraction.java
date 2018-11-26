@@ -3,6 +3,7 @@ package selenium_api;
 import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.InputEvent;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
@@ -34,7 +35,7 @@ public class Topic_06_UserInteraction {
 	}
 
 //
-	@Test
+//	@Test
 	public void TC01_MouseHover() {
 //		Test Script 01: Move mouse to element
 //		Step 01 - Truy cập vào trang: http://www.myntra.com/
@@ -54,12 +55,21 @@ public class Topic_06_UserInteraction {
 		Assert.assertTrue(LoginTitle.isDisplayed());
 	}	
 	@Test
-	public void TC02_ClickAndHold() {	
+	public void TC02_ClickAndHold() throws Exception {	
 //		Test Script 02: Click and hold element - select multiple item
 //		Step 01 - Truy cập vào trang: http://jqueryui.com/resources/demos/selectable/display-grid.html
+		String jquery_url = "http://jqueryui.com/resources/demos/selectable/display-grid.html";
+		common.open_page(driver, jquery_url);
 //		Step 02 - Click and hold từ 1-> 4
+		List<WebElement> ListItems = driver.findElements(By.xpath("//ol[@id='selectable']/li"));
+		Actions moveItem = new Actions(driver);
+		moveItem.clickAndHold(ListItems.get(0)).moveToElement(ListItems.get(3)).release().perform();
+		Thread.sleep(5000);
 //		Step 03 - Sau khi chọn kiểm tra rằng có đúng 4 phần tử đã được chọn thành công với xpath:
+		List<WebElement> number_selected = driver.findElements(By.xpath("//li[@class='ui-state-default ui-selectee ui-selected']"));
 //		//li[@class='ui-state-default ui-selectee ui-selected']
+		Assert.assertEquals(number_selected.size(), 4);
+		
 	}
 //	@Test
 	public void TC03_DoubleClick() {	

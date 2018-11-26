@@ -21,7 +21,6 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 public class Topic_05_Button_Checkbox_Alert {
-//	public ArrayList<Common> Common1;
 	WebDriver driver;
 	JavascriptExecutor javaExecutor;
 	WebDriverWait waitExplicit;
