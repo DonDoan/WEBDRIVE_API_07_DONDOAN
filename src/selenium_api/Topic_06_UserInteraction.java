@@ -4,10 +4,11 @@ import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.InputEvent;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -54,7 +55,7 @@ public class Topic_06_UserInteraction {
 		WebElement LoginTitle = driver.findElement(LoginTitleBy);
 		Assert.assertTrue(LoginTitle.isDisplayed());
 	}	
-	@Test
+//	@Test
 	public void TC02_ClickAndHold() throws Exception {	
 //		Test Script 02: Click and hold element - select multiple item
 //		Step 01 - Truy cập vào trang: http://jqueryui.com/resources/demos/selectable/display-grid.html
@@ -69,34 +70,79 @@ public class Topic_06_UserInteraction {
 		List<WebElement> number_selected = driver.findElements(By.xpath("//li[@class='ui-state-default ui-selectee ui-selected']"));
 //		//li[@class='ui-state-default ui-selectee ui-selected']
 		Assert.assertEquals(number_selected.size(), 4);
+//		Click Randomly
+		driver.navigate().refresh();
+		List<WebElement> ListItems1 = driver.findElements(By.xpath("//ol[@id='selectable']/li"));		
+		WebElement num1 = ListItems1.get(0);
+		WebElement num3 = ListItems1.get(2);
+		WebElement num5 = ListItems1.get(4);
+		WebElement num7 = ListItems1.get(6);
+		WebElement num9 = ListItems1.get(8);
+		moveItem.keyDown(Keys.CONTROL).build().perform();
+		num1.click();
+		num3.click();
+		num5.click();
+		num7.click();
+		num9.click();
+		moveItem.keyUp(Keys.CONTROL).build().perform();
+		List<WebElement> number5_selected = driver.findElements(By.xpath("//li[@class='ui-state-default ui-selectee ui-selected']"));		
+		Thread.sleep(5000);
+		Assert.assertEquals(number5_selected.size(), 5);		
 		
 	}
 //	@Test
-	public void TC03_DoubleClick() {	
+	public void TC03_DoubleClick() throws Exception {	
 //		Test Script 03: Double click
 //		Step 01 - Truy cập vào trang: http://www.seleniumlearn.com/double-click
+		common.open_page(driver, "http://www.seleniumlearn.com/double-click");
 //		Step 02 - Double click vào element: Double-Click Me!
+		WebElement DoubleClickMe = driver.findElement(By.xpath("//button[text()='Double-Click Me!']"));
+		Actions action = new Actions(driver);
+		action.doubleClick(DoubleClickMe).perform();
 //		Step 03 - Verify text trong alert được hiển thị: 'The Button was double-clicked.'
+		Alert Alert_Double_Click = driver.switchTo().alert();
+//		Alert_Double_Click.getText().
+		Assert.assertEquals(Alert_Double_Click.getText(), "The Button was double-clicked.");
 //		Step 04 - Accept Javascript alert
+		Alert_Double_Click.accept();
+		Thread.sleep(5000);
 	}
 //	@Test
-	public void TC04_RightClick() {
+	public void TC04_RightClick() throws Exception {
 //		Test Script 04: Right click to element
 //		Step 01 - Truy cập vào trang: http://swisnl.github.io/jQuery-contextMenu/demo.html
+		common.open_page(driver, "http://swisnl.github.io/jQuery-contextMenu/demo.html");
 //		Step 02 - Right click vào element: right click me
+		WebElement RightClickMe = driver.findElement(By.xpath("//span[text()='right click me']"));
+		Actions action = new Actions(driver);
+		action.contextClick(RightClickMe).perform();
 //		Step 03 - Hover chuột vào element: Quit
+		WebElement Quit = driver.findElement(By.xpath("//span[text()='Quit']"));
+		action.moveToElement(Quit).perform();
+		Thread.sleep(3000);
 //		Step 04 - Verify element Quit (visible + hover) với xpath:
 //		//li[contains(@class,'context-menu-visible') and contains(@class,'context-menu-hover')]/span[text()='Quit']
-//
+		Assert.assertTrue(driver.findElement(By.xpath("//li[contains(@class,'context-menu-visible') and contains(@class,'context-menu-hover')]/span[text()='Quit']")).isDisplayed());
 //		Step 05 - Click chọn Quit
+		Quit.click();
+		Thread.sleep(2000);
 //		Step 06 - Accept Javascript alert
+		Alert alert1 = driver.switchTo().alert();
+		Thread.sleep(2000);
+		alert1.accept();
 	}
-//	@Test
+	@Test
 	public void TC05_DragAndDrop() {
 //		Test Script 05: Drag and drop element
 //		Step 01 - Truy cập vào trang: http://demos.telerik.com/kendo-ui/dragdrop/angular
+		common.open_page(driver, "http://demos.telerik.com/kendo-ui/dragdrop/angular");
 //		Step 02 - Kéo hình tròn nhỏ vào hình tròn lớn
+		WebElement Source = driver.findElement(By.xpath("//div[@id='draggable']"));
+		WebElement Target = driver.findElement(By.xpath("//div[@id='droptarget']"));
+		Actions DragDropAction = new Actions(driver);
+		DragDropAction.dragAndDrop(Source, Target).build().perform();
 //		Step 03 - Verify message đã thay đổi: You did great!
+		Assert.assertEquals(Target.getText(), "You did great!");
 	}
 //	@Test
 //	@Test
@@ -168,10 +214,4 @@ public class Topic_06_UserInteraction {
 		driver.quit();
 	}
 
-	// Open URL
-	public void open_page(String a) {
-		driver.get(a);
-		driver.manage().window().maximize();
-		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-	}
 }
