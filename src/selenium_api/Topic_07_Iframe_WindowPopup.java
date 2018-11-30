@@ -25,6 +25,19 @@ public class Topic_07_Iframe_WindowPopup {
 //
 	@Test
 	public void f() {
+//		Test Script 01:
+//			Step 01 - Truy cập vào trang: http://www.hdfcbank.com/
+//			Step 02 - Close popup nếu có hiển thị (switch qua iframe nếu có)  - F5 (refresh page) nhiều lần thì sẽ xuất hiện popup
+//			Xpath iframe: //iframe[@id='vizury-notification-template']
+//
+//			Xpath close popup: //div[@id='div-close']
+//
+//			Step 03 - Verify đoạn text được hiển thị:  What are you looking for? (switch qua iframe nếu có)
+//
+//			Step 04:
+//			Verify banner có đúng 6 images (switch qua iframe nếu có)
+//
+//			Step 05 - Verify flipper banner được hiển thị và có 8 items
 		
 		String homePageTitle = driver.getTitle();
 		AssertJUnit.assertEquals(homePageTitle, "Google");
