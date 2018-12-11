@@ -13,7 +13,7 @@ public class Common_called {
 	@BeforeClass
 	public void beforeClass() {
 
-		// Chrome
+		// Chrome set
 		System.setProperty("webdriver.chrome.driver", ".\\lib\\chromedriver.exe");
 		driver = new ChromeDriver();
 	}
