@@ -4,7 +4,6 @@ import java.util.Set;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
@@ -38,7 +37,8 @@ public class Topic_07_WindowPopup {
 		switchToChildWindowByID(parent_wd);
 		System.out.println(parent_wd);
 //			Step 03 - Kiểm tra title của window mới = Google
-//		String title_ChildWindow = driver.getTitle();
+		String title_ChildWindow = driver.getTitle();
+		System.out.println(title_ChildWindow);
 //		Assert.assertEquals(title_ChildWindow, "Google");
 //			Step 04 - Close window mới
 		closeAllExceptForParentWindows(parent_wd);
@@ -47,7 +47,7 @@ public class Topic_07_WindowPopup {
 		driver.switchTo().window(parent_wd);
 //			Step 06 - Kiểm tra đã quay về parent window thành công (title/ url)	
 		Assert.assertEquals(driver.getCurrentUrl(), "https://daominhdam.github.io/basic-form/index.html");
-
+//
 	}
 
 //
