@@ -2,6 +2,7 @@ package selenium_api;
 
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
@@ -140,6 +141,110 @@ public class Common {
 				  break;
 			  }
 		  }	
-	 }	
+	 }
+//add new
+//		Switch to child Windows (only 2 windows)
+		public void switchToChildWindowByID(WebDriver driver, String parent) {
+			Set<String> allWindows = driver.getWindowHandles();
+			for (String runWindow : allWindows) {
+				if (!runWindow.equals(parent)) {
+					driver.switchTo().window(runWindow);
+					break;
+				}
+			}
+		}
+
+//	    Switch to child Windows (greater than 2 windows and title of the pages are unique)
+		public void switchToWindowByTitle(WebDriver driver, String title) {
+			Set<String> allWindows = driver.getWindowHandles();
+			for (String runWindows : allWindows) {
+				driver.switchTo().window(runWindows);
+				String currentWin = driver.getTitle();
+				if (currentWin.equals(title)) {
+					break;
+				}
+			}
+		}
+
+//	    Close all windows except for parent window
+		public boolean closeAllExceptForParentWindows(WebDriver driver, String parentWindow) {
+			Set<String> allWindows = driver.getWindowHandles();
+			for (String runWindows : allWindows) {
+				if (!runWindows.equals(parentWindow)) {
+					driver.switchTo().window(runWindows);
+					driver.close();
+				}
+			}
+			driver.switchTo().window(parentWindow);
+			if (driver.getWindowHandles().size() == 1)
+				return true;
+			else
+				return false;
+		}
+		public void highlightElement(WebDriver driver, WebElement element) {
+	        JavascriptExecutor js = (JavascriptExecutor) driver;
+	        js.executeScript("arguments[0].style.border='6px groove red'", element);
+	    }
+
+	    public Object executeForBrowser(WebDriver driver, String javaSript) {
+	        try {
+	            JavascriptExecutor js = (JavascriptExecutor) driver;
+	            return js.executeScript(javaSript);
+	        } catch (Exception e) {
+	            e.getMessage();
+	            return null;
+	        }
+	    }
+
+	    public Object clickToElementByJS(WebDriver driver, WebElement element) {
+	        try {
+	            JavascriptExecutor js = (JavascriptExecutor) driver;
+	            return js.executeScript("arguments[0].click();", element);
+	        } catch (Exception e) {
+	            e.getMessage();
+	            return null;
+	        }
+	    }
+
+	    public Object sendkeyToElementByJS(WebDriver driver, WebElement element, String value) {
+	        try {
+	            JavascriptExecutor js = (JavascriptExecutor) driver;
+	            return js.executeScript("arguments[0].setAttribute('value', '" + value + "')", element);
+	        } catch (Exception e) {
+	            e.getMessage();
+	            return null;
+	        }
+	    }
+
+	    public Object removeAttributeInDOM(WebDriver driver, WebElement element, String attribute) {
+	        try {
+	            JavascriptExecutor js = (JavascriptExecutor) driver;
+	            return js.executeScript("arguments[0].removeAttribute('" + attribute + "');", element);
+	        } catch (Exception e) {
+	            e.getMessage();
+	            return null;
+	        }
+	    }
+
+	    public Object scrollToBottomPage() {
+	        try {
+	            JavascriptExecutor js = (JavascriptExecutor) driver;
+	            return js.executeScript("window.scrollBy(0,document.body.scrollHeight)");
+	        } catch (Exception e) {
+	            e.getMessage();
+	            return null;
+	        }
+	    }
+
+	    public Object navigateToUrlByJS(WebDriver driver, String url) {
+	        try {
+	            JavascriptExecutor js = (JavascriptExecutor) driver;
+	            return js.executeScript("window.location = '" + url + "'");
+	        } catch (Exception e) {
+	            e.getMessage();
+	            return null;
+	        }
+	    }	
+	 
 	// End Sub Functions
 }
