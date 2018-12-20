@@ -1,5 +1,6 @@
 package selenium_api;
 
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
@@ -8,7 +9,6 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-import org.testng.AssertJUnit;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -17,6 +17,7 @@ public class Topic_10_Selenium_Webdriver_Wait {
 
 	WebDriver driver;
 	Common c1 = new Common();
+	Date date;
 	@BeforeClass
 	public void beforeClass() {
 		
@@ -46,7 +47,7 @@ public class Topic_10_Selenium_Webdriver_Wait {
 //		Step 05 - Check result text is "Hello World!"
 		Assert.assertTrue(driver.findElement(By.xpath("//h4[text()='Hello World!']")).isDisplayed());
 	}
-	@Test
+//	@Test
 	public void TC02() {
 //		Test Script 02: Sử dụng Explicit wait
 //		Check cho loading icon invisible trước khi Helloworld text được hiển thị
@@ -68,17 +69,27 @@ public class Topic_10_Selenium_Webdriver_Wait {
 //		Step 04 - Check result text is "Hello World!"
 		Assert.assertTrue(driver.findElement(By.xpath("//h4[text()='Hello World!']")).isDisplayed());
 	}
-//	@Test
+	@Test
 	public void TC03() {
 //		Test Script 03: Sử dụng Explicit wait
 //		Check cho Hello world text visible -> sau đó check Helloworld text được hiển thị
 //		Implicit wait chỉ set 2s
+		driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
 //		Step 01 - Truy cập vào trang: 
 //		http://the-internet.herokuapp.com/dynamic_loading/2
+		c1.open_page(driver, "http://the-internet.herokuapp.com/dynamic_loading/2");
 //		Step 02 - Click the Start button
-//		Step 03 - Wait Hello World visible
-//		Step 04 - Check result text is "Hello World!"
+		c1.clickToElementByJS(driver, driver.findElement(By.xpath("//button[text()='Start']")));
 		
+//		Step 03 - Wait Hello World visible
+		System.out.println("--------Start time -----");
+		System.out.println(date = new Date());
+		WebDriverWait w = new WebDriverWait(driver, 2);
+		w.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//h4[text()='Hello World!']")));
+		System.out.println("--------End time -----");
+		System.out.println(date = new Date());
+//		Step 04 - Check result text is "Hello World!"
+		Assert.assertTrue(driver.findElement(By.xpath("//h4[text()='Hello World!']")).isDisplayed());		
 	}
 //
 	@AfterClass
