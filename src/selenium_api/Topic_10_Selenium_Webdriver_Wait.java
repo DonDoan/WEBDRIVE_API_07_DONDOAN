@@ -18,18 +18,20 @@ public class Topic_10_Selenium_Webdriver_Wait {
 	WebDriver driver;
 	Common c1 = new Common();
 	Date date;
+	WebDriverWait w ;
 	@BeforeClass
 	public void beforeClass() {
-		
-		
-		//Chrome
+
+		// Chrome
 		System.setProperty("webdriver.chrome.driver", ".\\lib\\chromedriver.exe");
 		driver = new ChromeDriver();
-		
+
 //		Firefox
 //		driver = new FirefoxDriver();
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		w = new WebDriverWait(driver, 2);		
 	}
+
 //
 //	@Test
 	public void TC01() throws Exception {
@@ -47,6 +49,7 @@ public class Topic_10_Selenium_Webdriver_Wait {
 //		Step 05 - Check result text is "Hello World!"
 		Assert.assertTrue(driver.findElement(By.xpath("//h4[text()='Hello World!']")).isDisplayed());
 	}
+
 //	@Test
 	public void TC02() {
 //		Test Script 02: Sử dụng Explicit wait
@@ -63,13 +66,14 @@ public class Topic_10_Selenium_Webdriver_Wait {
 		Assert.assertTrue(driver.findElement(By.xpath("//div[@id='loading']")).isDisplayed());
 //		WebDriverWait wait = new WebDriverWait(driver, 30);
 //		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("mail")));
-		
-		WebDriverWait w = new WebDriverWait(driver, 1);
+
+//		WebDriverWait w = new WebDriverWait(driver, 1);
 		w.until(ExpectedConditions.visibilityOfElementLocated(By.id("loading")));
 //		Step 04 - Check result text is "Hello World!"
 		Assert.assertTrue(driver.findElement(By.xpath("//h4[text()='Hello World!']")).isDisplayed());
 	}
-	@Test
+
+//	@Test
 	public void TC03() {
 //		Test Script 03: Sử dụng Explicit wait
 //		Check cho Hello world text visible -> sau đó check Helloworld text được hiển thị
@@ -80,18 +84,59 @@ public class Topic_10_Selenium_Webdriver_Wait {
 		c1.open_page(driver, "http://the-internet.herokuapp.com/dynamic_loading/2");
 //		Step 02 - Click the Start button
 		c1.clickToElementByJS(driver, driver.findElement(By.xpath("//button[text()='Start']")));
-		
+
 //		Step 03 - Wait Hello World visible
 		System.out.println("--------Start time -----");
 		System.out.println(date = new Date());
-		WebDriverWait w = new WebDriverWait(driver, 2);
+//		WebDriverWait w = new WebDriverWait(driver, 2);
 		w.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//h4[text()='Hello World!']")));
 		System.out.println("--------End time -----");
 		System.out.println(date = new Date());
 //		Step 04 - Check result text is "Hello World!"
-		Assert.assertTrue(driver.findElement(By.xpath("//h4[text()='Hello World!']")).isDisplayed());		
+		Assert.assertTrue(driver.findElement(By.xpath("//h4[text()='Hello World!']")).isDisplayed());
 	}
-//
+
+	@Test
+	public void TC_04_InvisibleInDomAndNot() {
+		c1.open_page(driver, "http://the-internet.herokuapp.com/dynamic_loading/2");
+		driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
+//		WebDriverWait w = new WebDriverWait(driver, 2);
+		// check visible
+		w.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath("//*[@id='start']/button")));
+		driver.findElement(By.xpath("//*[@id='start']/button")).click();
+
+		System.out.println("---Start time Hello World---");
+		System.out.println(date = new Date());
+		// check invisible (Hello world) -> ko co trong DOM -> pass
+		w.until(ExpectedConditions
+				.invisibilityOfElementLocated(By.xpath("//div[@id='finish']/h4[text() = 'Hello World!']")));
+		System.out.println("---End time Hello World---");
+		System.out.println(date = new Date());
+
+		// check invisible
+		System.out.println("---Start time Loading---");
+		System.out.println(date = new Date());
+		// check invisible (Hello world) -> ko co trong DOM -> pass
+		w.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//div[@id='loading']")));
+		System.out.println("---End time Loading---");
+		System.out.println(date = new Date());
+
+		Assert.assertTrue(
+				driver.findElement(By.xpath("//div[@id='finish']/h4[text() = 'Hello World!']")).isDisplayed());
+		driver.findElement(By.xpath("//*[@id='start']/button")).click();
+		w.until(ExpectedConditions
+				.visibilityOfAllElementsLocatedBy(By.xpath("//div[@id='finish']/h4[text() = 'Hello World!']")));
+		Assert.assertTrue(
+				driver.findElement(By.xpath("//div[@id='finish']/h4[text() = 'Hello World!']")).isDisplayed());
+
+		System.out.println("---Start time Loading---");
+		System.out.println(date = new Date());
+		// check invisible (Hello world) -> co trong DOM -> pass
+		w.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//div[@id='loading']")));
+		System.out.println("---End time Loading---");
+		System.out.println(date = new Date());
+	}
+
 	@AfterClass
 	public void afterClass() {
 		driver.quit();
