@@ -183,6 +183,7 @@ public class Topic_10_Selenium_Webdriver_Wait {
 //		Step 03 - In ra ngày đã chọn (Before AJAX call) -> hiện tại chưa chọn nên in ra = "No Selected Dates to display."
 		System.out.println("");
 //		Step 04 - Chọn ngày hiện tại (VD: 23/09/2017) (hoặc 1 ngày bất kì tương ứng trong tháng/ năm hiện tại)
+		
 //		Step 05 - Wait cho đến khi "loader ajax" không còn visible (sử dụng: invisibility)
 //		Xpath: //div[@class='raDiv']
 //		Step 06 - Wait cho selected date = 23 được visible ((sử dụng: visibility)
