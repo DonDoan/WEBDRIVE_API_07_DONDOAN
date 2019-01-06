@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- <suite name="Selenium Advanced Online 07" parallel="false"> if parallet set to true all test will run parallel -->
+<suite name="Selenium Advanced Online 07" parallel="tests" thread-count="5"> 
+
+	<parameter name = "email"  value = "automationfc001@gmail.com" ></parameter>
+	<parameter name = "password"  value = "123123" ></parameter>
+
+<!-- <p>Run all TC in class TestNG.TestNG_01_Annotation.</p> -->
+  <test name="Run all TC in class TestNG.TestNG_01_Annotation">
+   	<parameter name = "browser" value = "chrome"></parameter>
+<!--   	<groups>  -->
+<!--   		<run> -->
+<!--   		<include name = "user" /> -->
+<!--   		</run> -->
+<!--   	</groups> -->
+    <classes>
+      <class name="TestNG.TestNG_01_Annotation"/>
+    </classes>  	
+  </test> <!-- Test -->
+  
+<!-- <p>Module Login.</p>   -->
+  <test name="Module Login">
+   	<parameter name = "browser" value = "chrome"></parameter>
+  	<groups> 
+  		<run>
+  		<include name = "user" />
+  		</run>
+  	</groups>
+    <classes>
+      <class name="TestNG.TestNG_01_Annotation"/>
+    </classes>  	
+  </test> Test
+  
+<!--   <test name="Module Payment"> -->
+<!--  	<parameter name = "browser" value = "chrome"></parameter> -->
+<!--   	<groups>  -->
+<!--   		<run> -->
+<!-- 			<include name ="payment" >   </include> -->
+<!--   		</run> -->
+<!--   	</groups> -->
+<!--     <classes> -->
+<!--       <class name="TestNG.TestNG_01_Annotation"/> -->
+<!--     </classes> -->
+<!--   </test> Test -->
+
+
+<!-- <p>Run ON Chrome.</p>    -->
+  <test name="Run ON Chrome">
+  	<parameter name = "browser" value = "chrome"></parameter>
+  	<groups> 
+  		<run>
+  		<include name = "payment_1" />
+  		</run>
+  	</groups>
+    <classes>
+      <class name="TestNG.TestNG_01_Annotation"/>
+    </classes>
+  </test> Test
+  
+  <test name="Run ON Chrome Headless">
+  	<parameter name = "browser" value = "chrome_headless"></parameter>
+  	<groups> 
+  		<run>
+  		<include name = "payment_1" />
+  		</run>
+  	</groups>
+    <classes>
+      <class name="TestNG.TestNG_01_Annotation"/>
+    </classes>
+  </test> Test
+
+<!--   <test name="Run ON Firefox"> -->
+<!--   	<parameter name = "browser" value = "firefox"></parameter> -->
+<!--   	<groups>  -->
+<!--   		<run> -->
+<!--   		<include name = "payment_1" /> -->
+<!--   		</run> -->
+<!--   	</groups> -->
+<!--     <classes> -->
+<!--       <class name="TestNG.TestNG_01_Annotation"/> -->
+<!--     </classes> -->
+<!--   </test> Test -->
+  
+<!--   <test name="Module Payment"> -->
+<!--     <classes> -->
+<!--       <class name="TestNG.TestNG_02_Annotation"/> -->
+<!--     </classes> -->
+<!--   </test> Test -->
+</suite> <!-- Suite -->
