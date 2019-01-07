@@ -4,21 +4,27 @@ import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import com.google.common.base.Function;
+
 public class Topic_10_Selenium_Webdriver_Wait {
 
 	WebDriver driver;
 	Common c1 = new Common();
 	Date date;
-	WebDriverWait w ;
+	WebDriverWait w;
+
 	@BeforeClass
 	public void beforeClass() {
 
@@ -29,7 +35,7 @@ public class Topic_10_Selenium_Webdriver_Wait {
 //		Firefox
 //		driver = new FirefoxDriver();
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-		w = new WebDriverWait(driver, 2);		
+		w = new WebDriverWait(driver, 2);
 	}
 
 //
@@ -121,91 +127,126 @@ public class Topic_10_Selenium_Webdriver_Wait {
 		driver.get("http://the-internet.herokuapp.com/dynamic_loading/2");
 //		Check Hello World text invisible -> not in DOM,  PASS (Wait for implicitly wait)
 		System.out.println("--------Start time - Check Hello World text invisible -> not in DOM -----");
-		System.out.println(date = new Date());		
-		w1.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//h4[text()='Hello World!']")));	
+		System.out.println(date = new Date());
+		w1.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//h4[text()='Hello World!']")));
 		System.out.println("--------End time -----");
-		System.out.println(date = new Date());	
+		System.out.println(date = new Date());
 //		Check Loading invisible -> not in DOM, PASS (Wait for implicitly wait)
 		System.out.println("--------Start time  - Check Loading invisible -> not in DOM, -----");
-		System.out.println(date = new Date());		
-		w1.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//div[@id='loading']")));	
+		System.out.println(date = new Date());
+		w1.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//div[@id='loading']")));
 		System.out.println("--------End time -----");
-		System.out.println(date = new Date());	
+		System.out.println(date = new Date());
 //		Click the Start button
 		System.out.println("--------Click the Start button -----");
 //		c1.clickToElementByJS(driver, driver.findElement(By.xpath("//button[text()='Start']")));
 		driver.findElement(By.xpath("//button[text()='Start']")).click();
 //		Check Loading visible -> in DOM, PASS 	
 		System.out.println("--------Start time  - Check Loading visible -> in DOM, -----");
-		System.out.println(date = new Date());		
-		w1.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@id='loading']")));	
+		System.out.println(date = new Date());
+		w1.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@id='loading']")));
 		System.out.println("--------End time -----");
-		System.out.println(date = new Date());		
+		System.out.println(date = new Date());
 //		Check Hello World text visible -> in DOM,  PASS (Wait for implicitly wait)
 		System.out.println("--------Start time - Check Hello World text visible -> in DOM -----");
-		System.out.println(date = new Date());		
+		System.out.println(date = new Date());
 		driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
-		WebDriverWait w3 = new WebDriverWait(driver, 7); //5s is a optima number, loading icon visible in 5s
-		w3.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id='finish']//h4[text()='Hello World!']")));	
+		WebDriverWait w3 = new WebDriverWait(driver, 7); // 5s is a optima number, loading icon visible in 5s
+		w3.until(ExpectedConditions
+				.visibilityOfElementLocated(By.xpath("//*[@id='finish']//h4[text()='Hello World!']")));
 		System.out.println("--------End time -----");
-		System.out.println(date = new Date());		
+		System.out.println(date = new Date());
 //		Check Loading precense -> in DOM, 		
 		System.out.println("--------Start time  - Check Loading precense -> in DOM, PASS -----");
-		System.out.println(date = new Date());	
-		w2.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@id='loading']")));	
+		System.out.println(date = new Date());
+		w2.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@id='loading']")));
 		System.out.println("--------End time -----");
-		System.out.println(date = new Date());					
+		System.out.println(date = new Date());
 //		Check Loading invisible -> in DOM, PASS		
 		System.out.println("--------Start time  - Check Loading invisible -> in DOM, -----");
-		System.out.println(date = new Date());		
-		w1.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//div[@id='loading']")));	
+		System.out.println(date = new Date());
+		w1.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//div[@id='loading']")));
 		System.out.println("--------End time -----");
-		System.out.println(date = new Date());		
+		System.out.println(date = new Date());
 //		Check Loading visible -> in DOM, FAIL		
 //		System.out.println("--------Start time  - Check Loading visible -> in DOM, -----");
 //		System.out.println(date = new Date());		
 //		w1.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@id='loading']")));	
 //		System.out.println("--------End time -----");
 //		System.out.println(date = new Date());			
-			
+
 	}
-	
-	@Test
+
+//	@Test
 	public void TC05() {
 //		Test Script 05: Explicit Wait
 //		Step 01 - Truy cập vào trang:
 //		http://demos.telerik.com/aspnet-ajax/ajaxloadingpanel/functionality/explicit-show-hide/defaultcs.aspx
-		driver.get("http://demos.telerik.com/aspnet-ajax/ajaxloadingpanel/functionality/explicit-show-hide/defaultcs.aspx");
+		driver.get(
+				"http://demos.telerik.com/aspnet-ajax/ajaxloadingpanel/functionality/explicit-show-hide/defaultcs.aspx");
 		driver.manage().window().maximize();
 //		Step 02 - Wait cho "Date Time Picker" được hiển thị (sử dụng: presence or visibility)
 		WebDriverWait w1 = new WebDriverWait(driver, 4);
-		w1.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath("")));
+		w1.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath("//div[@class='contentWrapper']")));
 //		Step 03 - In ra ngày đã chọn (Before AJAX call) -> hiện tại chưa chọn nên in ra = "No Selected Dates to display."
-		System.out.println("");
+		WebElement ChosenDate = driver.findElement(By.xpath("//div[@class='datesContainer']//span"));
+		System.out.println("Chosen Date is " + ChosenDate.getText());
 //		Step 04 - Chọn ngày hiện tại (VD: 23/09/2017) (hoặc 1 ngày bất kì tương ứng trong tháng/ năm hiện tại)
-		
+		WebElement Date17 = driver.findElement(By.xpath("//div[@class='contentWrapper']//td/a[text()='17']"));
+		Date17.click();
+		WebDriverWait w2 = new WebDriverWait(driver, 5); // set = 4 will cause errors timeout
+		System.out.println("Start wait...");
 //		Step 05 - Wait cho đến khi "loader ajax" không còn visible (sử dụng: invisibility)
 //		Xpath: //div[@class='raDiv']
+		w2.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//div[@class='raDiv']")));
 //		Step 06 - Wait cho selected date = 23 được visible ((sử dụng: visibility)
 //		Xpath: //*[contains(@class,'rcSelected')]//a[text()='23']
-//		Step 07 - Verify ngày đã chọn bằng = Saturday, September 23, 2017		
-	}	
-	
-	
-//	@Test
+		w2.until(ExpectedConditions
+				.visibilityOfElementLocated(By.xpath("//*[contains(@class,'rcSelected')]//a[text()='17']")));
+		System.out.println("End wait...");
+//		Step 07 - Verify ngày đã chọn bằng = Saturday, September 23, 2017	
+		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		WebElement ChosenDate1 = driver.findElement(By.xpath("//div[@class='datesContainer']//span"));
+		System.out.println("Selected Date is " + ChosenDate1);
+		String SelectedDateStr = ChosenDate1.getText();
+		System.out.println("String of selected date is " + SelectedDateStr);
+		Assert.assertTrue(SelectedDateStr.equals("Thursday, January 17, 2019"));
+	}
+
+	@Test
 	public void TC06() {
 //		Test Script 06: Fluent Wait
 //		Step 01 - Truy cập vào trang: 
 //		https://daominhdam.github.io/fluent-wait/
+		driver.get("https://daominhdam.github.io/fluent-wait/");
+		driver.manage().window().maximize();
 //		Step 02 - Wait cho đến khi countdown time được visible (visibility)
-//		Step 03 - Sử dụng Fluent wait để:
+		WebDriverWait w3 = new WebDriverWait(driver, 7);
+		w3.until(ExpectedConditions
+				.visibilityOf(driver.findElement(By.xpath("//div[@id='javascript_countdown_time']"))));
+		WebElement countdount = driver.findElement(By.xpath("//div[@id='javascript_countdown_time']"));
+		// Step 03 - Sử dụng Fluent wait để:
 //		Mỗi 1s kiểm tra countdount= 00 được xuất hiện trên page hay chưa (giây đếm ngược về 00)
-//		Tức là trong vòng 15s (tổng thời gian), cứ mỗi 1 giây verify xem nó đã đếm ngược về giây 00 hay chưa			
-	}	
+//		Tức là trong vòng 15s (tổng thời gian), cứ mỗi 1 giây verify xem nó đã đếm ngược về giây 00 hay chưa	
+		new FluentWait<WebElement>(countdount)
+				// Tổng time wait là 15s
+				.withTimeout(15, TimeUnit.SECONDS)
+				// Tần số mỗi 1s check 1 lần
+				.pollingEvery(1, TimeUnit.SECONDS)
+				// Nếu gặp exception là find ko thấy element sẽ bỏ qua
+				.ignoring(NoSuchElementException.class)
+				// Kiểm tra điều kiện
+				.until(new Function<WebElement, Boolean>() {
+					public Boolean apply(WebElement element) {
+						// Kiểm tra điều kiện countdount = 00
+						boolean flag = element.getText().endsWith("00");
+						System.out.println("Time = " + element.getText());
+						// return giá trị cho function apply
+						return flag;
+					}
+				});
+	}
 
-	
-
-	
 	@AfterClass
 	public void afterClass() {
 		driver.quit();
